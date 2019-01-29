@@ -10,10 +10,9 @@ import Foundation
 import SpriteKit
 
 class Challenge: SKNode {
-    let _top: SKSpriteNode = {
-        let node = SKSpriteNode(texture: SKTexture(imageNamed: "piller"))
-        node.zRotation = CGFloat.pi
-        node.setScale(0.5)
+    private let _top: SKSpriteNode = {
+        let node = SKSpriteNode(texture: SKTexture(imageNamed: "pipe_top"))
+        node.setScale(0.4)
         node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = false
@@ -24,9 +23,9 @@ class Challenge: SKNode {
         return node
     }()
     
-    let _bottom: SKSpriteNode = {
-        let node = SKSpriteNode(texture: SKTexture(imageNamed: "piller"))
-        node.setScale(0.5)
+    private let _bottom: SKSpriteNode = {
+        let node = SKSpriteNode(texture: SKTexture(imageNamed: "pipe_bottom"))
+        node.setScale(0.4)
         node.physicsBody = SKPhysicsBody(rectangleOf: node.size)
         node.physicsBody?.affectedByGravity = false
         node.physicsBody?.isDynamic = false
@@ -37,7 +36,7 @@ class Challenge: SKNode {
         return node
     }()
     
-    let _coin: SKSpriteNode = {
+    private let _coin: SKSpriteNode = {
         let node = SKSpriteNode(texture: SKTexture(imageNamed: "flower"))
         node.size = CGSize(width: 50, height: 50)
         node.physicsBody = SKPhysicsBody(circleOfRadius: node.size.width / 2)

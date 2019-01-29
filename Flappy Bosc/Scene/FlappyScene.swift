@@ -96,7 +96,7 @@ class FlappyScene: SKScene {
     var pause: Bool = false
     var gameState = GameState.initial
     
-    let move = SKAction.moveTo(x: -5, duration: 4)
+    let move = SKAction.moveTo(x: -36, duration: 5)
     
     let flyAway = SKAction.moveBy(x: 0, y: 250, duration: 0.5)
     let disappear = SKAction.scale(to: CGSize(width: 0, height: 0), duration: 0.5)
@@ -113,11 +113,12 @@ class FlappyScene: SKScene {
         pillersAndCoin?.run(seq)
         addChild(pillersAndCoin!)
     }
+    
     lazy var generateAction = SKAction.run {
         self.generate()
     }
     
-    let delay = SKAction.wait(forDuration: 1)
+    let delay = SKAction.wait(forDuration: 1.5)
     
     var inset: UIEdgeInsets {
         if #available(iOS 11.0, *) {
