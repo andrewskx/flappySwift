@@ -11,7 +11,7 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -19,10 +19,9 @@ class GameViewController: UIViewController {
         
         if let view = self.view as! SKView? {
             let scene = FlappyScene(size: view.frame.size)
-
+            
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill
-            
             // Present the scene
             view.presentScene(scene)
             
@@ -33,7 +32,7 @@ class GameViewController: UIViewController {
             view.showsNodeCount = true
         }
     }
-
+    
     override var shouldAutorotate: Bool {
         return true
     }

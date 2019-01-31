@@ -10,7 +10,7 @@ import Foundation
 import SpriteKit
 
 enum GameState {
-    case initial, playing, pause, restart, resume
+    case initial, playing, pause, restart, resume, dying
 }
 
 struct CollisionBitMask {

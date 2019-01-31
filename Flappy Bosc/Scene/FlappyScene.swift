@@ -10,15 +10,23 @@ import SpriteKit
 
 class FlappyScene: SKScene {
     
+    @objc func handleEnterBackground() {
+        guard playing else { return }
+        print("background")
+        pauseState()
+    }
+    
+    deinit {
+//        NotificationCenter.default.removeObserver(self)
+        print("deinit")
+    }
+    
     lazy var bird: SKSpriteNode = {
         let bird = SKSpriteNode(texture: SKTexture(imageNamed: "bird1"))
         bird.name = "bird"
         bird.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         bird.size = CGSize(width: 40, height: 40)
         bird.physicsBody = SKPhysicsBody(circleOfRadius: bird.size.width / 2)
-        bird.physicsBody?.categoryBitMask = CollisionBitMask.bird
-        bird.physicsBody?.collisionBitMask = CollisionBitMask.ground | CollisionBitMask.pillar
-        bird.physicsBody?.contactTestBitMask = CollisionBitMask.coin | bird.physicsBody!.collisionBitMask
         bird.physicsBody?.affectedByGravity = false
         bird.physicsBody?.isDynamic = false
         bird.physicsBody?.allowsRotation = false
@@ -96,14 +104,18 @@ class FlappyScene: SKScene {
     var pause: Bool = false
     var gameState = GameState.initial
     
-    let move = SKAction.moveTo(x: -36, duration: 5)
+//    let move = SKAction.moveTo(x: -36, duration: 5)
     
-    let flyAway = SKAction.moveBy(x: 0, y: 250, duration: 0.5)
-    let disappear = SKAction.scale(to: CGSize(width: 0, height: 0), duration: 0.5)
-    lazy var gotCoin = SKAction.group([self.flyAway, self.disappear])
+//    let flyAway = SKAction.moveBy(x: 0, y: 250, duration: 0.5)
+//    let disappear = SKAction.scale(to: CGSize(width: 0, height: 0), duration: 0.5)
+//    lazy var gotCoin = SKAction.group([self.flyAway, self.disappear])
+    var gotCoin = SKAction.group([SKAction.moveBy(x: 0, y: 250, duration: 0.5), SKAction.scale(to: .zero, duration: 0.5)])
+
     
-    let remove = SKAction.removeFromParent()
-    lazy var seq = SKAction.sequence([self.move, self.remove])
+//    let remove = SKAction.removeFromParent()
+//    lazy var seq = SKAction.sequence([self.move, self.remove])
+    var seq = SKAction.sequence([SKAction.moveTo(x: -36, duration: 5), SKAction.removeFromParent()])
+
     
     func generate() {
         pillersAndCoin = Challenge(midFrameX: 0, midFrameY: frame.midY)
@@ -118,7 +130,7 @@ class FlappyScene: SKScene {
         self.generate()
     }
     
-    let delay = SKAction.wait(forDuration: 1.5)
+    let delay = SKAction.wait(forDuration: 2)
     
     var inset: UIEdgeInsets {
         if #available(iOS 11.0, *) {
@@ -134,9 +146,14 @@ class FlappyScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
+        NotificationCenter.default.addObserver(self,
+                                               selector:#selector(handleEnterBackground),
+                                               name: UIApplication.didBecomeActiveNotification,
+                                               object: nil)
+        
         setupScene()
         initialState()
-        
+        backgroundColor = .red
         //need to delete
         self.run(SKAction.run { self.safeInset() })
     }
@@ -189,6 +206,8 @@ class FlappyScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
         // handle background animation
         guard playing else { return }
+        let rotation = (bird.physicsBody?.velocity.dy)! * ((bird.physicsBody?.velocity.dy)! < 0 ? 0.003 : 0.001)
+        bird.zRotation = CGFloat(min(max(-1, rotation), 0.5))
         enumerateChildNodes(withName: "background") { (node, something) in
             if let bg = node as? SKSpriteNode {
                 bg.position = CGPoint(x: bg.position.x - 2, y: bg.position.y)
@@ -226,11 +245,12 @@ class FlappyScene: SKScene {
                 }
                 return
             default:
-                assertionFailure("Error")
+                continue
             }
         }
     }
 }
+
 extension FlappyScene: SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -238,13 +258,25 @@ extension FlappyScene: SKPhysicsContactDelegate {
         let objectA = bodyA.name == "bird" ? bodyA : bodyB
         let objectB = bodyA.name != "bird" ? bodyA : bodyB
         
-        //        print("here")x
         switch (objectA.physicsBody?.categoryBitMask, objectB.physicsBody?.categoryBitMask) {
         case (CollisionBitMask.bird, CollisionBitMask.pillar):
-            //            scene?.isPaused = true
-            print("Bird and Pillar")
+            gameState = .dying
+            bird.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 30))
+            removeAction(forKey: "generate")
+            enumerateChildNodes(withName: "challenge") { (node, pointer) in
+                    node.isPaused = true
+                }
+            objectA.physicsBody?.categoryBitMask = 0
+            objectA.physicsBody?.collisionBitMask = 0
+            objectA.physicsBody?.contactTestBitMask = 0
+            run(SKAction.sequence([SKAction.wait(forDuration: 3), SKAction.run{self.restartState()}]))
+            playing = false
+            bird.physicsBody?.allowsRotation = true
+            bird.run(SKAction.rotate(toAngle: 0.1, duration: 0.3))
         case (CollisionBitMask.bird, CollisionBitMask.coin):
-            objectB.physicsBody?.contactTestBitMask = 0
+//            objectB.physicsBody?.contactTestBitMask = 0
+//            objectB.physicsBody?.collisionBitMask = 0
+            objectB.physicsBody?.categoryBitMask = 0
             objectB.run(gotCoin)
             score += 1
             currentScoreLbl.text = String(score)
@@ -260,6 +292,10 @@ extension FlappyScene: SKPhysicsContactDelegate {
 
 extension FlappyScene {
     func initialState() {
+        bird.physicsBody?.categoryBitMask = CollisionBitMask.bird
+        bird.physicsBody?.collisionBitMask = CollisionBitMask.ground | CollisionBitMask.pillar
+        bird.physicsBody?.contactTestBitMask = CollisionBitMask.coin | bird.physicsBody!.collisionBitMask
+        bird.zRotation = 0
         gameState = .initial
         setupBirdAnimation()
         setupBackground()
@@ -271,11 +307,12 @@ extension FlappyScene {
         let sequence = SKAction.sequence([zoomIn, zoomOut])
         tapToPlayLbl.run(SKAction.repeatForever(sequence))
 
-        highscoreLbl.fontSize = 24
         let yPos = (self.frame.maxY + self.frame.midY) / 2
         highscoreLbl.position = CGPoint(x: self.frame.midX, y: yPos)
         let highscore = UserDefaults.standard.integer(forKey: "highscore")
         highscoreLbl.text = "High score: \(highscore)"
+        highscoreLbl.run(SKAction.scale(to: 1.0, duration: 0.2))
+        highscoreLbl.fontSize = 24
         highscoreLbl.isHidden = false
     }
     
@@ -302,11 +339,11 @@ extension FlappyScene {
     
     func pauseState() {
         gameState = .pause
+        let generateAction = action(forKey: "generate")
+        generateAction?.speed = 0
         enumerateChildNodes(withName: "challenge") { (node, pointer) in
             node.isPaused = true
         }
-        let generateAction = action(forKey: "generate")
-        generateAction?.speed = 0
         playing = false
         bird.isPaused = true
         bird.physicsBody?.affectedByGravity = false

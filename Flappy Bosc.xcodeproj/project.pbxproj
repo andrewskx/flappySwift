@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D3FE18F2200B8D3002541FE /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 9D3FE18E2200B8D3002541FE /* player.atlas */; };
 		9DFFA04321E2BC9200DDB5A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFFA04221E2BC9200DDB5A8 /* AppDelegate.swift */; };
 		9DFFA04B21E2BC9200DDB5A8 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFFA04A21E2BC9200DDB5A8 /* GameViewController.swift */; };
 		9DFFA05021E2BC9400DDB5A8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DFFA04F21E2BC9400DDB5A8 /* Assets.xcassets */; };
@@ -14,7 +15,6 @@
 		9DFFA05E21E2BC9500DDB5A8 /* Flappy_BoscTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFFA05D21E2BC9500DDB5A8 /* Flappy_BoscTests.swift */; };
 		9DFFA06921E2BC9500DDB5A8 /* Flappy_BoscUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFFA06821E2BC9500DDB5A8 /* Flappy_BoscUITests.swift */; };
 		9DFFA07A21E2C17400DDB5A8 /* GameStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFFA07921E2C17400DDB5A8 /* GameStuff.swift */; };
-		9DFFA07C21E2CA4200DDB5A8 /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 9DFFA07B21E2CA4200DDB5A8 /* player.atlas */; };
 		9DFFA07F21E2F76F00DDB5A8 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFFA07E21E2F76F00DDB5A8 /* CGFloat.swift */; };
 		9DFFA08221E4A85300DDB5A8 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFFA08121E4A85300DDB5A8 /* Challenge.swift */; };
 		9DFFA08621E546CA00DDB5A8 /* FlappyScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFFA08521E546CA00DDB5A8 /* FlappyScene.swift */; };
@@ -38,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D3FE18E2200B8D3002541FE /* player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = player.atlas; sourceTree = "<group>"; };
 		9DFFA03F21E2BC9200DDB5A8 /* Flappy Bosc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flappy Bosc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DFFA04221E2BC9200DDB5A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9DFFA04A21E2BC9200DDB5A8 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
@@ -51,7 +52,6 @@
 		9DFFA06821E2BC9500DDB5A8 /* Flappy_BoscUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flappy_BoscUITests.swift; sourceTree = "<group>"; };
 		9DFFA06A21E2BC9500DDB5A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9DFFA07921E2C17400DDB5A8 /* GameStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameStuff.swift; sourceTree = "<group>"; };
-		9DFFA07B21E2CA4200DDB5A8 /* player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = player.atlas; sourceTree = "<group>"; };
 		9DFFA07E21E2F76F00DDB5A8 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
 		9DFFA08121E4A85300DDB5A8 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		9DFFA08521E546CA00DDB5A8 /* FlappyScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlappyScene.swift; sourceTree = "<group>"; };
@@ -111,7 +111,7 @@
 				9DFFA07721E2C14100DDB5A8 /* Scene */,
 				9DFFA07621E2C13100DDB5A8 /* Controller */,
 				9DFFA04F21E2BC9400DDB5A8 /* Assets.xcassets */,
-				9DFFA07B21E2CA4200DDB5A8 /* player.atlas */,
+				9D3FE18E2200B8D3002541FE /* player.atlas */,
 				9DFFA05121E2BC9400DDB5A8 /* LaunchScreen.storyboard */,
 				9DFFA05421E2BC9400DDB5A8 /* Info.plist */,
 			);
@@ -281,7 +281,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9DFFA07C21E2CA4200DDB5A8 /* player.atlas in Resources */,
+				9D3FE18F2200B8D3002541FE /* player.atlas in Resources */,
 				9DFFA05021E2BC9400DDB5A8 /* Assets.xcassets in Resources */,
 				9DFFA05321E2BC9400DDB5A8 /* LaunchScreen.storyboard in Resources */,
 			);
