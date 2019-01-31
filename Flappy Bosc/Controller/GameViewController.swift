@@ -19,6 +19,7 @@ class GameViewController: UIViewController {
         
         if let view = self.view as! SKView? {
             let scene = FlappyScene(size: view.frame.size)
+//            let scene = TestScene(size: view.frame.size)
             
             // Set the scale mode to scale to fit the window
             scene.scaleMode = .aspectFill

@@ -16,11 +16,6 @@ class FlappyScene: SKScene {
         pauseState()
     }
     
-    deinit {
-//        NotificationCenter.default.removeObserver(self)
-        print("deinit")
-    }
-    
     lazy var bird: SKSpriteNode = {
         let bird = SKSpriteNode(texture: SKTexture(imageNamed: "bird1"))
         bird.name = "bird"
@@ -114,7 +109,7 @@ class FlappyScene: SKScene {
     
 //    let remove = SKAction.removeFromParent()
 //    lazy var seq = SKAction.sequence([self.move, self.remove])
-    var seq = SKAction.sequence([SKAction.moveTo(x: -36, duration: 5), SKAction.removeFromParent()])
+    lazy var seq = SKAction.sequence([SKAction.moveTo(x: -36, duration: TimeInterval(self.frame.width / 2 / 60)), SKAction.removeFromParent()])
 
     
     func generate() {
@@ -122,7 +117,7 @@ class FlappyScene: SKScene {
         let randomY = CGFloat.random(lower: -100, upper: 100)
         pillersAndCoin?.position.x = frame.maxX + 25
         pillersAndCoin?.position.y += randomY
-        pillersAndCoin?.run(seq)
+        pillersAndCoin?.run(seq, withKey: "moveingChallenge")
         addChild(pillersAndCoin!)
     }
     
@@ -217,7 +212,7 @@ class FlappyScene: SKScene {
             }
         }
     }
-    
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             let location = touch.location(in: self)
@@ -272,10 +267,8 @@ extension FlappyScene: SKPhysicsContactDelegate {
             run(SKAction.sequence([SKAction.wait(forDuration: 3), SKAction.run{self.restartState()}]))
             playing = false
             bird.physicsBody?.allowsRotation = true
-            bird.run(SKAction.rotate(toAngle: 0.1, duration: 0.3))
+            bird.run(SKAction.rotate(toAngle: -.pi / 2, duration: 0.3))
         case (CollisionBitMask.bird, CollisionBitMask.coin):
-//            objectB.physicsBody?.contactTestBitMask = 0
-//            objectB.physicsBody?.collisionBitMask = 0
             objectB.physicsBody?.categoryBitMask = 0
             objectB.run(gotCoin)
             score += 1
@@ -341,9 +334,8 @@ extension FlappyScene {
         gameState = .pause
         let generateAction = action(forKey: "generate")
         generateAction?.speed = 0
-        enumerateChildNodes(withName: "challenge") { (node, pointer) in
-            node.isPaused = true
-        }
+        let movingChallenge = action(forKey: "movingChallenge")
+        movingChallenge?.speed = 0
         playing = false
         bird.isPaused = true
         bird.physicsBody?.affectedByGravity = false
@@ -359,11 +351,10 @@ extension FlappyScene {
     
     func resumeState() {
         gameState = .playing
-        enumerateChildNodes(withName: "challenge") { (node, pointer) in
-            node.isPaused = false
-        }
         let generateAction = action(forKey: "generate")
         generateAction?.speed = 1
+        let movingChallenge = action(forKey: "movingChallenge")
+        movingChallenge?.speed = 1
         pauseBtn.texture = SKTexture(imageNamed: "pause")
         let scaleDown = SKAction.scale(to: CGSize(width: 40, height: 40), duration: 0.3)
         let translate = SKAction.move(to: CGPoint(x: self.frame.maxX - 30, y: 30 + inset.bottom), duration: 0.3)

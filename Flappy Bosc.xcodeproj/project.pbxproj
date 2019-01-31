@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D2B89BA2203899500119635 /* TestScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D2B89B92203899500119635 /* TestScene.swift */; };
 		9D3FE18F2200B8D3002541FE /* player.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 9D3FE18E2200B8D3002541FE /* player.atlas */; };
 		9DFFA04321E2BC9200DDB5A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFFA04221E2BC9200DDB5A8 /* AppDelegate.swift */; };
 		9DFFA04B21E2BC9200DDB5A8 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DFFA04A21E2BC9200DDB5A8 /* GameViewController.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9D2B89B92203899500119635 /* TestScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestScene.swift; sourceTree = "<group>"; };
 		9D3FE18E2200B8D3002541FE /* player.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = player.atlas; sourceTree = "<group>"; };
 		9DFFA03F21E2BC9200DDB5A8 /* Flappy Bosc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flappy Bosc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DFFA04221E2BC9200DDB5A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				9DFFA08521E546CA00DDB5A8 /* FlappyScene.swift */,
+				9D2B89B92203899500119635 /* TestScene.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				9DFFA07F21E2F76F00DDB5A8 /* CGFloat.swift in Sources */,
 				9DFFA07A21E2C17400DDB5A8 /* GameStuff.swift in Sources */,
 				9DFFA08221E4A85300DDB5A8 /* Challenge.swift in Sources */,
+				9D2B89BA2203899500119635 /* TestScene.swift in Sources */,
 				9DFFA04B21E2BC9200DDB5A8 /* GameViewController.swift in Sources */,
 				9DFFA08621E546CA00DDB5A8 /* FlappyScene.swift in Sources */,
 				9DFFA04321E2BC9200DDB5A8 /* AppDelegate.swift in Sources */,
